@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+		<title>Save User</title>
+	</head>
+
+	<body>
+		<div class="container">
+			<h3>User Directory</h3>
+			<hr>
+		
+			<p class="h4 mb-4">Save User</p>
+		
+			<form action="#" th:action="@{/users/save}"
+							th:object="${user}" method="POST">
+			
+				<input type="hidden" th:field="*{id}"/>
+			
+				<input type="text" th:field="*{login}"
+					class="form-control mb-4 col-4" placeholder="Login">
+				<input type="text" th:field="*{password}"
+					class="form-control mb-4 col-4" placeholder="Password">
+			
+				<div class="form-group">
+            		<div class="custom-control custom-checkbox custom-control-inline">
+                		<input type="checkbox" id="accepted?" name="accepted?" class="custom-control-input" value="true" th:field="*{accepted}">
+                		<label class="custom-control-label" for="accepted?">Accepted?</label>
+            		</div>
+            	</div>
+
+				<div class="form-group">
+            		<div class="custom-control custom-radio custom-control-inline">
+                		<input type="radio" id="ADMIN" name="ADMIN" class="custom-control-input" value="1" th:field="*{role.id}">
+                		<label class="custom-control-label" for="ADMIN">ADMIN</label>
+            		</div>
+            		<div class="custom-control custom-radio custom-control-inline">
+                		<input type="radio" id="NORMAL" name="NORMAL" class="custom-control-input" value="2" th:field="*{role.id}">
+                		<label class="custom-control-label" for="NORMAL">NORMAL</label>
+            		</div>
+            	</div>
+				<br>
+			
+				<button type="submit" class="btn btn-info col-2">Save</button>
+		
+			</form>
+		
+			<hr>
+			<a th:href="@{/users/list}" class = "btn btn-primary btn-sm mb-3">Back to Users list</a>
+	
+		</div>
+	</body>
+
+</html>

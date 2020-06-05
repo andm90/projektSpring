@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<script th:inline="javascript">
+		window.onload = function () {
+
+			var wolumen = [[${wolumen}]];
+			var data = [[${data}]];
+			var otwarcie = [[${otwarcie}]];
+			var najwyzszy = [[${najwyzszy}]];
+			var najnizszy = [[${najnizszy}]];
+			var zamkniecie = [[${zamkniecie}]];
+	
+	
+			var dpsOfWolumen = [];   
+			var dpsOfIndex = []; 
+	   
+		 	var chartOfWolumen = new CanvasJS.Chart("chartOfWolumen",{
+	      		title :{
+	      			text: "Wolumen indeksu w latach"
+	      		},
+	      		axisX: {						
+	      			title: "Czas",
+	      		
+	      		},
+	      		axisY: {						
+	      			title: "Wolumen"
+	      		},
+	      		data: [{
+	      			type: "line",
+	      			dataPoints : dpsOfWolumen
+	      		}]
+	      	});
+			var chartOfIndex = new CanvasJS.Chart("chartOfIndex",{
+		      	title :{
+		      		text: "Wartości indeksu w latach"
+		      	},
+		      	axisX: {						
+		      		title: "Czas"
+		      	},
+		      	axisY: {						
+		      		title: "Wartości"
+		      	},
+		      	data: [{
+		      		type: "candlestick",
+		      		dataPoints : dpsOfIndex
+		      	}]
+		      });
+
+
+	     	function parseDataPointsOfWolumen () {
+	    	 	for (var i = 0; i <= wolumen.length; i++)
+	    		 	dpsOfWolumen.push({x: new Date(data[i]), y: wolumen[i]});
+
+	     	};
+	     	function parseDataPointsOfIndex () {
+	    	 	for (var i = 0; i <= otwarcie.length; i++)
+	    		 	dpsOfIndex.push({x: new Date(data[i]), y:[otwarcie[i], najwyzszy[i], najnizszy[i], zamkniecie[i]]});
+
+	     	};
+	   		
+	     	parseDataPointsOfWolumen();
+	     	parseDataPointsOfIndex();
+	   	 	chartOfWolumen.render();
+	   	 	chartOfIndex.render();
+		}
+	</script>
+
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+	</head>
+	<body>
+
+		<a th:href="@{/wig20s/refresh}"
+			class="btn btn-primary btn-sm mb-3">
+			Refresh
+		</a>
+
+		<div id="chartOfWolumen" style="height: 350px; width: 100%;"></div>
+		<div id="chartOfIndex" style="height: 350px; width: 100%;"></div>
+
+		<hr>
+		<hr>
+		
+		<a href="../home"
+			class="btn btn-primary btn-sm mb-3">
+			Back to home
+		</a>
+
+	</body>
+</html>
